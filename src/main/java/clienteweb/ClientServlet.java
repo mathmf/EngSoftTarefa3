@@ -19,13 +19,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import service.ClienteService;
+
 
 
 	@WebServlet(urlPatterns = {"/usuario"})
 	public class ClientServlet extends HttpServlet {
 
-		List<User> lista = new ArrayList<User>();
-		
+	ClienteService clienteService;
+	
+	public void init() throws ServletException{
+		clienteService = new ClienteService();
+		super.init();
+	}
+	
 	  @Override
 	  protected void doPut(HttpServletRequest req, HttpServletResponse resp)
 	          throws ServletException, IOException {
@@ -44,15 +51,20 @@ import com.google.gson.Gson;
 	  @Override
 	  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	          throws ServletException, IOException {
+		  
+		  String i = req.getParameter("i");
+		  if(i!="" && i!= null) {
+			  clienteService.delUsuario(Integer.parseInt(i));
+		  }
 	      
-		    RequestDispatcher dispatcher = req.getRequestDispatcher("usuario.jsp");
-		    
-		    
-		    Gson gson = new Gson();
-		    String list = gson.toJson(lista);
-		    req.setAttribute("Mapa",list );
-		    
-		    dispatcher.forward(req, resp);
+		  RequestDispatcher dispatcher = req.getRequestDispatcher("usuario.jsp");
+			    
+			    
+		  Gson gson = new Gson();
+		  String list = gson.toJson(clienteService.getTodos());
+		  req.setAttribute("Mapa",list );
+			    
+		  dispatcher.forward(req, resp);
 			  
 	  }
 	  
@@ -66,9 +78,8 @@ import com.google.gson.Gson;
 		  String status = req.getParameter("status");
 		  User user = new User (userId,nome,email,senha,status);
 		  
-	      lista.add(user);
+		  clienteService.addUsuario(user);
 
-	      System.out.println("mapa" + lista);
 	      resp.sendRedirect("usuario");
 	      //resp.setCharacterEncoding("UTF-8");
 	      //resp.getWriter().print("POST enviou usuário : " + user.toString());

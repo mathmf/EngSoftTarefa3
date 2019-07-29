@@ -22,6 +22,16 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+    color: initial;
+}
+
 </style>
 </head>
 <body>
@@ -66,6 +76,7 @@ tr:nth-child(even) {
     	<th>Nome</th>
     	<th>e-mail</th>
     	<th>status</th>
+    	<th>a&ccedil;&otilde;es</th> 
     </thead>
     <tbody id="tabela">
     </tbody>
@@ -86,7 +97,8 @@ function exibirTodos() {
 			var id = row.insertCell(0).innerHTML = mapa[i].id;
 			var nome = row.insertCell(1).innerHTML = mapa[i].Nome;
 			var email = row.insertCell(2).innerHTML = mapa[i].email;
-			var status = row.insertCell(3).innerHTML = mapa[i].status;	
+			var status = row.insertCell(3).innerHTML = mapa[i].status;
+			row.insertCell(4).innerHTML = "<a href='usuario?i=" + i + "' class='button'>deletar</a>";		    
 	}
 	
 	}
@@ -102,6 +114,7 @@ function exibirAtiv() {
 			var nome = row.insertCell(1).innerHTML = mapa[i].Nome;
 			var email = row.insertCell(2).innerHTML = mapa[i].email;
 			var status = row.insertCell(3).innerHTML = mapa[i].status;
+			row.insertCell(4).innerHTML = "<a href='usuario?i=" + i + "' class='button'>deletar</a>";
 		}
 	}
 	
@@ -118,6 +131,7 @@ function exibirInativ() {
 			var nome = row.insertCell(1).innerHTML = mapa[i].Nome;
 			var email = row.insertCell(2).innerHTML = mapa[i].email;
 			var status = row.insertCell(3).innerHTML = mapa[i].status;
+			row.insertCell(4).innerHTML = "<a href='usuario?i=" + i + "' class='button'>deletar</a>";
 		}
 	}
 	
